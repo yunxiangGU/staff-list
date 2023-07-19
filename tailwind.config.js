@@ -14,6 +14,7 @@ module.exports = {
       },
       fontFamily: {
         workSans: ["var(--font-work-sans)"],
+        nunitoSans: ["var(--font-nunito-sans)"],
       },
     },
   },

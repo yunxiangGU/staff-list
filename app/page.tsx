@@ -1,24 +1,35 @@
 "use client"; // This is a client component
 
-import Image from "next/image";
 import React, { useState } from "react";
 import LogIn from "./LogIn";
+import { serialize } from "@shoelace-style/shoelace/dist/utilities/form.js";
+import HomePage from "./HomePage";
 
 export default function Home() {
-  let [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  // TODO: to change back to false
+  let [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [userName, setUserName] = useState<string>("");
 
   function handleSubmit(event: any) {
     event.preventDefault();
+    const form = document.querySelector("form");
+    if (form !== null) {
+      const data = serialize(form);
+      console.log("data: ", data);
+    }
     setIsLoggedIn(true);
   }
 
-  return (
-    <main className="flex flex-col min-h-screen justify-between">
-      <Image src="/bg-1.svg" alt="bg-1" width={571} height={255} />
-      {isLoggedIn ? <div>hello</div> : <LogIn handleSubmit={handleSubmit} />}
-      <div className="flex flex-col items-end">
-        <Image src="/bg-2.svg" alt="bg-2" width={710} height={350} />
-      </div>
-    </main>
+  function handleUserNameInput(event: any) {
+    setUserName(event.target.value);
+  }
+
+  return isLoggedIn ? (
+    <HomePage userName={userName} />
+  ) : (
+    <LogIn
+      handleSubmit={handleSubmit}
+      handleUserNameInput={handleUserNameInput}
+    />
   );
 }

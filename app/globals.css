@@ -3,7 +3,5 @@
 @tailwind utilities;
 
 body {
-  sl-input::part(base) {
-    @apply w-[292px]
-  }
+
 }
