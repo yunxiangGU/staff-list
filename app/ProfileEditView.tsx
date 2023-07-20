@@ -54,7 +54,7 @@ export default function ProfileEditView(props: {
               ? props.handleAddProfile
               : props.handleEditProfile
           }
-          className="grid grid-cols-2 grid-flow-row gap-x-[25px] gap-y-[21px]"
+          className="grid grid-cols-2 grid-flow-row gap-x-[25px] gap-y-[21px] font-nunitoSans text-[16px] font-normal"
         >
           <SlInput
             type="text"

@@ -7,9 +7,8 @@ import HomePage from "./HomePage";
 import useStickyState from "./Utils";
 
 export default function Home() {
-  // TODO: to change back to false
-  let [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
-  const [userName, setUserName] = useState<string>("");
+  let [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>("User");
   let [themeColor, setThemeColor] = useStickyState("blue", "themeColor");
 
   function handleColorChange(event: any) {
@@ -25,7 +24,6 @@ export default function Home() {
     const form = document.querySelector("form");
     if (form !== null) {
       const data = serialize(form);
-      console.log("data: ", data);
     }
     setIsLoggedIn(true);
   }

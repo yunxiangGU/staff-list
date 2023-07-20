@@ -108,10 +108,10 @@ export default function HomePage(props: {
         props.themeColor === "blue" ? "bg-[#EFF8FF]" : "bg-[#FFF9EF]"
       }`}
     >
-      <div className="relative flex bg-white">
+      <div className="sticky w-full top-0 left-0 bg-white z-10">
         <Clock />
       </div>
-      <div className="flex items-center bg-white w-screen px-[28px] pt-[15px] pb-[10px]">
+      <div className="sticky w-full top-[28px] left-0 flex items-center bg-white px-[28px] pt-[15px] pb-[10px] z-10 overflow-hidden">
         <SlButton
           variant="default"
           size="small"
@@ -122,11 +122,11 @@ export default function HomePage(props: {
         </SlButton>
         <div className="flex-1" />
         <div className="font-nunitoSans text-[14px] font-normal pr-[12px]">
-          user
+          {props.userName}
         </div>
         <SlIcon name="person-circle" />
       </div>
-      <div className="bg-white flex-1 my-[14px] mx-[28px] flex flex-col items-center">
+      <div className="bg-white my-[14px] mx-[28px] flex flex-col items-center flex-1">
         {showProfileEditView ? (
           <ProfileEditView
             selectedProfileId={selectedProfileId}
