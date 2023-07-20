@@ -1,31 +1,106 @@
 import React, { useState } from "react";
 import { SlButton, SlIcon } from "@shoelace-style/shoelace/dist/react";
 import Clock from "./Clock";
-import Image from "next/image";
 import Palette from "./Palette";
 import ProfileEditView from "./ProfileEditView";
+import ProfileList from "./ProfileList";
 
 type Profile = {
+  id: number;
   name: string;
   age: number;
   email: string;
-  gender: Gender;
+  gender: string;
 };
-
-enum Gender {
-  Male = 0,
-  Female = 1,
-  PreferNotToSay = 2,
-}
 
 export default function HomePage(props: {
   userName: string;
   themeColor: string;
   handleColorChange: any;
 }) {
-  let [profileList, setProfileList] = useState<Profile[]>([]);
-
   let [showProfileEditView, setShowProfileEditView] = useState<boolean>(false);
+  let [selectedProfileId, setSelectedProfileId] = useState<number>(-1);
+  let [profileList, setProfileList] = useState<Profile[]>([]);
+  let [tempName, setTempName] = useState<string>("");
+  let [tempAge, setTempAge] = useState<number>(0);
+  let [tempEmail, setTempEmail] = useState<string>("");
+  let [tempGender, setTempGender] = useState<string>("");
+
+  function handleAddProfile(event: any) {
+    event.preventDefault();
+    setShowProfileEditView(false);
+    let tempId = profileList.length;
+    let newProfile = {
+      id: tempId,
+      name: tempName,
+      age: tempAge,
+      email: tempEmail,
+      gender: tempGender,
+    };
+    setProfileList((oldProfileList) => [...oldProfileList, newProfile]);
+    setTempName("");
+    setTempAge(0);
+    setTempEmail("");
+    setTempGender("");
+  }
+
+  function handleEditProfile(event: any) {
+    event.preventDefault();
+    setShowProfileEditView(false);
+    let newProfile = [
+      {
+        id: selectedProfileId,
+        name: tempName,
+        age: tempAge,
+        email: tempEmail,
+        gender: tempGender,
+      },
+    ];
+    let updatedProfileList = profileList.map(
+      (profile) => newProfile.find((o) => o.id === profile.id) || profile
+    );
+    setProfileList(updatedProfileList);
+    setSelectedProfileId(-1);
+    setTempName("");
+    setTempAge(0);
+    setTempEmail("");
+    setTempGender("");
+  }
+
+  function handleProfileNameInput(event: any) {
+    setTempName(event.target.value);
+  }
+
+  function handleProfileAgeInput(event: any) {
+    setTempAge(event.target.value);
+  }
+
+  function handleProfileEmailInput(event: any) {
+    setTempEmail(event.target.value);
+  }
+
+  function handleProfileGenderChange(event: any) {
+    setTempGender(event.target.value);
+  }
+
+  function handleNewProfileClick() {
+    setShowProfileEditView(true);
+  }
+
+  function handleProfileCardClick(
+    profileId: number,
+    profileName: string,
+    profileAge: number,
+    profileEmail: string,
+    profileGender: string
+  ) {
+    setSelectedProfileId(profileId);
+    setTempName(profileName);
+    setTempAge(profileAge);
+    setTempEmail(profileEmail);
+    setTempGender(profileGender);
+    setShowProfileEditView(true);
+  }
 
   return (
     <main
@@ -53,52 +128,27 @@ export default function HomePage(props: {
       </div>
       <div className="bg-white flex-1 my-[14px] mx-[28px] flex flex-col items-center">
         {showProfileEditView ? (
-          <ProfileEditView type={"add"} themeColor={props.themeColor} />
+          <ProfileEditView
+            selectedProfileId={selectedProfileId}
+            tempName={tempName}
+            tempAge={tempAge}
+            tempEmail={tempEmail}
+            tempGender={tempGender}
+            themeColor={props.themeColor}
+            handleAddProfile={handleAddProfile}
+            handleEditProfile={handleEditProfile}
+            handleProfileNameInput={handleProfileNameInput}
+            handleProfileAgeInput={handleProfileAgeInput}
+            handleProfileEmailInput={handleProfileEmailInput}
+            handleProfileGenderChange={handleProfileGenderChange}
+          />
         ) : (
-          <>
-            <div className="flex items-center w-full pt-[24px] px-[30px]">
-              <div className="font-nunitoSans font-bold text-[20px]">
-                Profiles
-              </div>
-              <div className="flex-1" />
-              <div className="text-[16px] font-bold">
-                <SlButton
-                  className={
-                    props.themeColor === "blue"
-                      ? "button-blue"
-                      : "button-orange"
-                  }
-                  variant={props.themeColor === "blue" ? "primary" : "warning"}
-                  size="medium"
-                  onClick={() => setShowProfileEditView(true)}
-                >
-                  <SlIcon slot="prefix" name="plus-circle"></SlIcon>
-                  New Profile
-                </SlButton>
-              </div>
-            </div>
-            {profileList && profileList.length > 0 ? (
-              <></>
-            ) : (
-              <>
-                <div className="pt-[81px]">
-                  <Image
-                    src="/empty-state.svg"
-                    alt="empty-state"
-                    width={188}
-                    height={140}
-                  />
-                </div>
-                <div className="pt-[22px] font-nunitoSans font-bold text-[18px]">
-                  No Profiles Yet
-                </div>
-                <div className="pt-[7px] font-nunitoSans font-normal text-[16px] flex flex-col items-center">
-                  <p>Click the button at the top right</p>
-                  <p>to create a new profile.</p>
-                </div>
-              </>
-            )}
-          </>
+          <ProfileList
+            profileList={profileList}
+            themeColor={props.themeColor}
+            handleNewProfileClick={handleNewProfileClick}
+            handleProfileCardClick={handleProfileCardClick}
+          />
         )}
       </div>
       <Palette handleColorChange={props.handleColorChange} />

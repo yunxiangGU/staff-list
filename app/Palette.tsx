@@ -11,7 +11,7 @@ export default function Palette(props: { handleColorChange: any }) {
     <div className="absolute bottom-[39px] right-[58px]">
       <SlDropdown hoist placement="top-end" distance={10}>
         <SlButton slot="trigger" circle>
-          <SlIcon name="palette"></SlIcon>
+          <SlIcon name="palette" />
         </SlButton>
         <SlColorPicker
           inline

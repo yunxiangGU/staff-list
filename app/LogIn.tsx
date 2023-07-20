@@ -34,14 +34,14 @@ export default function LogIn(props: {
             placeholder="Username"
             required
             onSlInput={props.handleUserNameInput}
-          ></SlInput>
+          />
           <SlInput
             className="pb-[39px]"
             type="password"
             placeholder="Password"
             password-toggle
             required
-          ></SlInput>
+          />
           <SlButton
             type="submit"
             variant={props.themeColor === "blue" ? "primary" : "warning"}
