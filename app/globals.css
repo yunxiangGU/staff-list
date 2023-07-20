@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
 
+sl-color-picker::part(grid) {
+    @apply hidden
+}
+
+sl-color-picker::part(slider) {
+    @apply hidden
+}
+
+sl-color-picker::part(input) {
+    @apply hidden
+}
+
+sl-color-picker::part(preview) {
+    @apply hidden
+}
+
+sl-color-picker::part(format-button) {
+    @apply hidden
+}
+
+sl-color-picker::part(eye-dropper-button) {
+    @apply hidden
 }

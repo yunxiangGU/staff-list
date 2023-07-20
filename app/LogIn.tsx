@@ -4,13 +4,16 @@ import Clock from "./Clock";
 import Image from "next/image";
 
 export default function LogIn(props: {
+  themeColor: string;
   handleSubmit: any;
   handleUserNameInput: any;
 }) {
   return (
     <main className="flex flex-col min-h-screen">
       <div className="relative">
-        <Clock />
+        <div className="absolute top-0 left-0 z-10">
+          <Clock />
+        </div>
         <Image
           className="absolute"
           src="/bg-1.svg"
@@ -39,7 +42,11 @@ export default function LogIn(props: {
             password-toggle
             required
           ></SlInput>
-          <SlButton type="submit" variant="primary" style={{ width: "100%" }}>
+          <SlButton
+            type="submit"
+            variant={props.themeColor === "blue" ? "primary" : "warning"}
+            style={{ width: "100%" }}
+          >
             Login
           </SlButton>
         </form>
