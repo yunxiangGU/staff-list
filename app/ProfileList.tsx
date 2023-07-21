@@ -12,6 +12,8 @@ type Profile = {
   gender: string;
 };
 
+const NUMBER_OF_PROFILES_PER_PAGE = 10;
+
 export default function ProfileList(props: {
   profileList: Profile[];
   themeColor: string;
@@ -40,7 +42,10 @@ export default function ProfileList(props: {
         <>
           <div className="w-full px-[30px] pt-[26px] pb-[32px] grid grid-cols-1 sm:grid-cols-2 grid-flow-row gap-x-[10px] gap-y-[13px]">
             {props.profileList
-              .slice((currentPage - 1) * 10, (currentPage - 1) * 10 + 10)
+              .slice(
+                (currentPage - 1) * NUMBER_OF_PROFILES_PER_PAGE,
+                currentPage * NUMBER_OF_PROFILES_PER_PAGE
+              )
               .map((profile) => {
                 return (
                   <ProfileCard
