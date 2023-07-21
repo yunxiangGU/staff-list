@@ -1,8 +1,8 @@
 "use client"; // This is a client component
 
 import React, { useState } from "react";
-import LogIn from "./LogIn";
 import { serialize } from "@shoelace-style/shoelace/dist/utilities/form.js";
+import LogIn from "./LogIn";
 import HomePage from "./HomePage";
 import useStickyState from "./Utils";
 

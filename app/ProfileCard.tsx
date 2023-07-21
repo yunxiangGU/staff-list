@@ -24,8 +24,8 @@ export default function ProfileCard(props: {
       key={props.profileId}
     >
       <div className="flex items-center text-[55px]">
-        <SlIcon name="person-circle" />
-        <div className="pl-[24px] flex flex-col items-start w-full">
+        <SlIcon className="shrink-0" name="person-circle" />
+        <div className="pl-[24px] flex flex-col items-start w-full overflow-hidden">
           <div className="flex items-center w-full">
             <div className="flex flex-col items-start">
               <p className="text-[14px] font-nunitoSans font-normal text-[#707070]">

@@ -4,6 +4,8 @@ import Clock from "./Clock";
 import Palette from "./Palette";
 import ProfileEditView from "./ProfileEditView";
 import ProfileList from "./ProfileList";
+import NewProfileButton from "./NewProfileButton";
+import SaveChangesButton from "./SaveChangesButton";
 
 type Profile = {
   id: number;
@@ -105,13 +107,13 @@ export default function HomePage(props: {
   return (
     <main
       className={`flex flex-col min-h-screen relative ${
-        props.themeColor === "blue" ? "bg-[#EFF8FF]" : "bg-[#FFF9EF]"
+        props.themeColor === "blue" ? "sm:bg-[#EFF8FF]" : "sm:bg-[#FFF9EF]"
       }`}
     >
       <div className="sticky w-full top-0 left-0 bg-white z-10">
         <Clock />
       </div>
-      <div className="sticky w-full top-[28px] left-0 flex items-center bg-white px-[28px] pt-[15px] pb-[10px] z-10 overflow-hidden">
+      <div className="sticky w-full top-[28px] left-0 flex items-center bg-white px-[28px] pt-[15px] pb-[10px] z-10 overflow-hidden drop-shadow-md">
         <SlButton
           variant="default"
           size="small"
@@ -121,12 +123,17 @@ export default function HomePage(props: {
           <SlIcon name="arrow-left" />
         </SlButton>
         <div className="flex-1" />
+        <SlIcon className="sm:hidden pr-[12px]" name="person-circle" />
         <div className="font-nunitoSans text-[14px] font-normal pr-[12px]">
           {props.userName}
         </div>
-        <SlIcon name="person-circle" />
+        <SlIcon className="hidden sm:block" name="person-circle" />
+        <div className="flex-1 sm:hidden" />
+        <div className="block sm:hidden">
+          <Palette handleColorChange={props.handleColorChange} />
+        </div>
       </div>
-      <div className="bg-white my-[14px] mx-[28px] flex flex-col items-center flex-1">
+      <div className="bg-white sm:my-[14px] sm:mx-[28px] flex flex-col items-center flex-1">
         {showProfileEditView ? (
           <ProfileEditView
             selectedProfileId={selectedProfileId}
@@ -151,7 +158,32 @@ export default function HomePage(props: {
           />
         )}
       </div>
-      <Palette handleColorChange={props.handleColorChange} />
+      <div className="sticky bottom-[39px] hidden sm:block">
+        <div className="flex w-full items-center pr-[58px]">
+          <div className="flex-1" />
+          <Palette handleColorChange={props.handleColorChange} />
+        </div>
+      </div>
+
+      <div className="sticky bottom-[22px] px-[14px] sm:hidden w-full flex justify-center">
+        {showProfileEditView ? (
+          <SaveChangesButton
+            themeColor={props.themeColor}
+            selectedProfileId={selectedProfileId}
+            handleAddProfile={handleAddProfile}
+            handleEditProfile={handleEditProfile}
+            tempName={tempName}
+            tempAge={tempAge}
+            tempEmail={tempEmail}
+            tempGender={tempGender}
+          />
+        ) : (
+          <NewProfileButton
+            themeColor={props.themeColor}
+            handleNewProfileClick={handleNewProfileClick}
+          />
+        )}
+      </div>
     </main>
   );
 }

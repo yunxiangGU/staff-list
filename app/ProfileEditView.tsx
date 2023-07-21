@@ -1,11 +1,7 @@
-import {
-  SlButton,
-  SlIcon,
-  SlInput,
-  SlSelect,
-  SlOption,
-} from "@shoelace-style/shoelace/dist/react";
 import React, { useState } from "react";
+import { SlIcon, SlInput } from "@shoelace-style/shoelace/dist/react";
+import GenderSelect from "./GenderSelect";
+import SaveChangesButton from "./SaveChangesButton";
 
 export default function ProfileEditView(props: {
   selectedProfileId: number;
@@ -47,16 +43,13 @@ export default function ProfileEditView(props: {
         )}
         <div className="flex-1" />
       </div>
-      <div className="flex w-full pt-[29px] pl-[30px]">
+      <div className="flex flex-col sm:flex-row w-full pt-[29px] px-[14px] sm:pl-[30px]">
         <form
-          onSubmit={
-            props.selectedProfileId < 0
-              ? props.handleAddProfile
-              : props.handleEditProfile
-          }
-          className="grid grid-cols-2 grid-flow-row gap-x-[25px] gap-y-[21px] font-nunitoSans text-[16px] font-normal"
+          id="profile-form"
+          className="grid grid-cols-2 sm:grid-cols-3 grid-flow-row gap-x-[14px] sm:gap-x-[25px] gap-y-[14px] sm:gap-y-[21px] font-nunitoSans text-[16px] font-normal"
         >
           <SlInput
+            className="col-span-2"
             type="text"
             label="Name"
             placeholder="Enter username"
@@ -74,7 +67,16 @@ export default function ProfileEditView(props: {
             disabled={props.selectedProfileId >= 0 && !editMode}
             onSlInput={props.handleProfileAgeInput}
           />
+          <div className="block sm:hidden">
+            <GenderSelect
+              editMode={editMode}
+              tempGender={props.tempGender}
+              selectedProfileId={props.selectedProfileId}
+              handleProfileGenderChange={props.handleProfileGenderChange}
+            />
+          </div>
           <SlInput
+            className="col-span-2"
             type="email"
             label="Email"
             placeholder="Enter email address"
@@ -83,32 +85,30 @@ export default function ProfileEditView(props: {
             disabled={props.selectedProfileId >= 0 && !editMode}
             onSlInput={props.handleProfileEmailInput}
           />
-          <SlSelect
-            label="Gender"
-            required
-            placeholder="-"
-            value={props.tempGender}
-            disabled={props.selectedProfileId >= 0 && !editMode}
-            onSlChange={props.handleProfileGenderChange}
-          >
-            <SlOption value="Male">Male</SlOption>
-            <SlOption value="Female">Female</SlOption>
-            <SlOption value="Prefer Not To Say">Prefer not to say</SlOption>
-          </SlSelect>
+          <div className="hidden sm:block">
+            <GenderSelect
+              editMode={editMode}
+              tempGender={props.tempGender}
+              selectedProfileId={props.selectedProfileId}
+              handleProfileGenderChange={props.handleProfileGenderChange}
+            />
+          </div>
           {(props.selectedProfileId < 0 || editMode === true) && (
-            <SlButton
-              type="submit"
-              variant={props.themeColor === "blue" ? "primary" : "warning"}
-              style={{ width: "100%" }}
-            >
-              {props.selectedProfileId < 0 && (
-                <SlIcon name="plus-circle" slot="prefix" />
-              )}
-              {props.selectedProfileId < 0 ? "Create Profile" : "Save Changes"}
-            </SlButton>
+            <div className="hidden sm:block col-span-2">
+              <SaveChangesButton
+                themeColor={props.themeColor}
+                selectedProfileId={props.selectedProfileId}
+                handleAddProfile={props.handleAddProfile}
+                handleEditProfile={props.handleEditProfile}
+                tempName={props.tempName}
+                tempAge={props.tempAge}
+                tempEmail={props.tempEmail}
+                tempGender={props.tempGender}
+              />
+            </div>
           )}
         </form>
-        <div className="flex-1" />
+        <div className="sm:flex-1" />
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import "./globals.css";
+import "@shoelace-style/shoelace/dist/themes/light.css";
 import type { Metadata } from "next";
 import { Work_Sans, Nunito_Sans } from "next/font/google";
-import "@shoelace-style/shoelace/dist/themes/light.css";
 
 const workSans = Work_Sans({
   subsets: ["latin"],

@@ -22,7 +22,7 @@ export default function LogIn(props: {
           height={255}
         />
       </div>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col sm:items-center px-[14px] z-10">
         <div className="font-workSans font-extrabold text-[30px] pb-[6px] pt-[183px]">
           Login
         </div>
@@ -45,7 +45,7 @@ export default function LogIn(props: {
           <SlButton
             type="submit"
             variant={props.themeColor === "blue" ? "primary" : "warning"}
-            style={{ width: "100%" }}
+            className="w-full"
           >
             Login
           </SlButton>
